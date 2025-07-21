@@ -9,6 +9,9 @@ interface NoteCircleProps {
   currentPlayingNote?: string | null;
 }
 
+import { SvgCircleAdapter } from "../adapters/SvgCircleAdapter";
+import { SvgTextAdapter } from "../adapters/SvgTextAdapter";
+
 export const NoteCircle: React.FC<NoteCircleProps> = ({
   notes,
   selectedNotes,
@@ -25,28 +28,21 @@ export const NoteCircle: React.FC<NoteCircleProps> = ({
         if (selectedNotes.includes(noteId)) fill = "orange";
         if (currentPlayingNote && noteId === currentPlayingNote) fill = "#00e0ff";
         return (
-          <circle
-            style={{ cursor: "pointer", transition: "fill 0.2s" }}
+          <SvgCircleAdapter
             key={note}
             cx={x}
             cy={y}
             r={20}
-            fill={fill}
+            fillColor={fill}
             onClick={() => onNoteClick(noteId)}
+            cursorPointer={true}
           />
         );
       })}
       {positions.map(({ note, x, y }) => (
-        <text
-          key={note + "-label"}
-          x={x}
-          y={y + 5}
-          textAnchor="middle"
-          fontSize="12"
-          fill="black"
-        >
+        <SvgTextAdapter key={note + "-label"} x={x} y={y + 5}>
           {note}
-        </text>
+        </SvgTextAdapter>
       ))}
     </>
   );

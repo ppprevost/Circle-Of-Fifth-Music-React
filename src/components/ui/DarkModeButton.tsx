@@ -1,13 +1,15 @@
 import { React } from "../../adapters/react";
 import { useTheme } from "./ThemeProvider";
+import { Button } from "../../adapters/Button";
 
 export const DarkModeButton: React.FC = () => {
-  const { theme, toggleTheme } = useTheme();
+  const { mode, toggleMode } = useTheme();
 
   return (
-    <button
-      onClick={toggleTheme}
-      style={{
+    <Button
+      onClick={toggleMode}
+      aria-label="Toggle dark mode"
+      sx={{
         position: "absolute",
         top: 16,
         right: 16,
@@ -15,16 +17,16 @@ export const DarkModeButton: React.FC = () => {
         borderRadius: 16,
         fontWeight: 600,
         fontSize: 16,
-        background: theme === "dark" ? "#222" : "#fff",
-        color: theme === "dark" ? "#fff" : "#222",
+        backgroundColor: mode === "dark" ? "#222" : "#fff",
+        color: mode === "dark" ? "#fff" : "#222",
         border: "1px solid #888",
         boxShadow: "0 2px 8px #0001",
         cursor: "pointer",
-        transition: "background 0.2s, color 0.2s"
+        transition: "background 0.2s, color 0.2s",
+        textTransform: "none",
       }}
-      aria-label="Toggle dark mode"
     >
-      {theme === "dark" ? "☀️ Light" : "🌙 Dark"}
-    </button>
+      {mode === "dark" ? "☀️ Light" : "🌙 Dark"}
+    </Button>
   );
 };

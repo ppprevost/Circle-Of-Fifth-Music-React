@@ -1,5 +1,5 @@
 import { NoteName, NOTES_CHROMATIC } from "../constants/notes";
-import { Note as TonalNote, distance as tonalDistance } from "@tonaljs/tonal";
+import { Note as TonalNote } from "@tonaljs/tonal";
 
 /**
  * Formats a note with its octave.
@@ -36,25 +36,30 @@ export const getCirclePositions = (
 /**
  * Map a note (e.g., "Eb") to the spelling used in NOTES_CHROMATIC (e.g., "D#").
  */
+function arrayIncludes<T>(arr: readonly T[], value: T): boolean {
+  return (arr as T[]).includes(value);
+}
+
 export function mapToChromatic(note: string): NoteName | null {
-  if (NOTES_CHROMATIC.includes(note as NoteName)) return note as NoteName;
+  if (arrayIncludes(NOTES_CHROMATIC, note as NoteName)) return note as NoteName;
   const enharmonic = TonalNote.enharmonic(note);
-  if (NOTES_CHROMATIC.includes(enharmonic as NoteName)) return enharmonic as NoteName;
-  if (NOTES_CHROMATIC.includes(note.toUpperCase() as NoteName)) return note.toUpperCase() as NoteName;
+  if (arrayIncludes(NOTES_CHROMATIC, enharmonic as NoteName)) return enharmonic as NoteName;
+  if (arrayIncludes(NOTES_CHROMATIC, note.toUpperCase() as NoteName)) return note.toUpperCase() as NoteName;
   return null;
 }
 
 /**
- * Generate the circle of fifths using Tonal, starting from a given root.
+ * Canonical circle of fifths order.
+ */
+const FIFTHS: NoteName[] = [
+  "C", "G", "D", "A", "E", "B", "F#", "C#", "G#", "D#", "A#", "F"
+];
+
+/**
+ * Generate the circle of fifths starting from a given root.
  */
 export function getCircleOfFifths(root: string): NoteName[] {
-  // Start from root, then add successive perfect fifths
-  const notes: NoteName[] = [];
-  let current = root;
-  for (let i = 0; i < 12; i++) {
-    const mapped = mapToChromatic(current);
-    notes.push(mapped ?? (current as NoteName));
-    current = tonalDistance(current, "5P");
-  }
-  return notes;
+  const idx = FIFTHS.indexOf(root as NoteName);
+  if (idx === -1) return FIFTHS;
+  return [...FIFTHS.slice(idx), ...FIFTHS.slice(0, idx)];
 }

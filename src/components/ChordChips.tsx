@@ -5,6 +5,8 @@ const CHORD_TYPES = [
   { label: "Maj7", suffix: "maj7" },
 ];
 
+import { Button } from "../adapters/Button";
+
 export const ChordChips: React.FC<{
   root: string;
   onChipClick: (chordName: string) => void;
@@ -13,23 +15,25 @@ export const ChordChips: React.FC<{
     {CHORD_TYPES.map((type) => {
       const chord = `${root}${type.suffix}`;
       return (
-        <button
+        <Button
           key={chord}
-          style={{
+          variant="outlined"
+          onClick={() => onChipClick(chord)}
+          sx={{
             borderRadius: 16,
-            border: "1px solid #888",
-            background: "#fff",
+            borderColor: "#888",
+            backgroundColor: "#fff",
             padding: "8px 18px",
             fontWeight: 600,
             fontSize: 16,
             cursor: "pointer",
             boxShadow: "0 2px 8px #0001",
             transition: "background 0.2s",
+            textTransform: "none",
           }}
-          onClick={() => onChipClick(chord)}
         >
           {chord}
-        </button>
+        </Button>
       );
     })}
   </div>

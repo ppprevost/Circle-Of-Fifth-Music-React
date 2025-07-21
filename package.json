@@ -1,6 +1,7 @@
 {
   "name": "react-typescript",
   "version": "1.0.0",
+  "type": "module",
   "description": "React and TypeScript example starter project",
   "keywords": [
     "typescript",
@@ -9,6 +10,12 @@
   ],
   "main": "src/main.tsx",
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^7.2.0",
+    "@mui/material": "^7.2.0",
+    "@tonaljs/chord": "^6.1.1",
+    "@tonaljs/tonal": "^4.10.0",
     "loader-utils": "3.2.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -16,24 +23,36 @@
     "tone": "15.1.22"
   },
   "devDependencies": {
+    "@testing-library/dom": "^9.3.2",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^14.1.2",
+    "@types/node": "^24.0.15",
     "@types/react": "^19.0.21",
     "@types/react-dom": "^19.0.13",
     "@typescript-eslint/eslint-plugin": "^8.37.0",
     "@typescript-eslint/parser": "^8.37.0",
-    "@vitejs/plugin-react": "^4.7.0",
+    "@vitejs/plugin-react": "^4.2.0",
+    "@vitest/coverage-v8": "^3.2.4",
     "eslint": "^9.31.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-prettier": "^5.5.3",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
+    "jiti": "^2.4.2",
+    "jsdom": "^26.1.0",
     "typescript": "^5.4.5",
-    "vite": "^7.0.5"
+    "vite": "^5.2.0",
+    "vitest": "^3.2.4"
   },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "echo \"No test runner configured\" && exit 0"
+    "test": "vitest",
+    "test:watch": "vitest watch",
+    "coverage": "vitest run --coverage",
+    "lint": "NODE_OPTIONS=--import=eslint/config eslint . --ext .ts,.tsx"
   },
   "browserslist": [
     ">0.2%",
